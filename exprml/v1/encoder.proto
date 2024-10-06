@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package exprml.v1;
+
+import "exprml/v1/value.proto";
+
+service Encoder {
+  rpc Encode(EncodeInput) returns (EncodeOutput) {}
+}
+
+message EncodeInput {
+  enum Format {
+    FORMAT_YAML = 0;
+    FORMAT_JSON = 1;
+  }
+  Format format = 1;
+  Value value = 3;
+}
+
+message EncodeOutput {
+  bool is_error = 1;
+  string error_message = 2;
+  string result = 3;
+}

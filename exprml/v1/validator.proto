@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package exprml.v1;
+
+service Validator {
+  rpc Validate(ValidateInput) returns (ValidateOutput) {}
+}
+
+message ValidateInput {
+  string source = 1;
+}
+
+message ValidateOutput {
+  enum Status {
+    OK = 0;
+    YAML_ERROR = 1;
+    VALIDATION_ERROR = 2;
+  }
+  Status status = 1;
+  string error_message = 2;
+}

@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package exprml.v1;
+
+import "exprml/v1/value.proto";
+
+service Evaluator {
+  rpc EvaluateExpr(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateEval(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateScalar(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateObj(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateArr(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateJson(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateRangeIter(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateGetElem(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateFunCall(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateCases(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateOpUnary(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateOpBinary(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateOpVariadic(EvaluateExprInput) returns (EvaluateExprOutput) {}
+}
+
+message FunDef {
+  string def = 1;
+  exprml.v1.Value value = 2;
+  repeated string with = 3;
+  Path path = 10;
+}
+message FunDefList {
+  FunDefList parent = 1;
+  FunDef def = 2;
+}
+
+message Path {
+  message Pos {
+    int64 index = 1;
+    string key = 2;
+  }
+  repeated Pos pos = 1;
+}
+
+message EvaluateExprInput {
+  Path path = 10;
+  FunDefList defs = 1;
+  exprml.v1.Value expr = 2;
+}
+
+message EvaluateExprOutput {
+  enum Status {
+    OK = 0;
+    INVALID_INDEX = 100;
+    INVALID_KEY = 101;
+    UNEXPECTED_TYPE = 102;
+    ARGUMENT_MISMATCH = 103;
+    CASES_NOT_EXHAUSTIVE = 104;
+    REFERENCE_NOT_FOUND = 105;
+    NOT_COMPARABLE = 106;
+    ABORTED = 107;
+    UNKNOWN = 108;
+  }
+  Status status = 1;
+  string error_message = 2;
+  Path error_path = 3;
+  exprml.v1.Value value = 4;
+}

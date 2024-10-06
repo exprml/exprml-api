@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package exprml.v1;
+
+import "exprml/v1/value.proto";
+
+service Decoder {
+  rpc Decode(DecodeInput) returns (DecodeOutput) {}
+}
+
+message DecodeInput {
+  string yaml = 1;
+}
+
+message DecodeOutput {
+  bool is_error = 1;
+  string error_message = 2;
+  Value value = 3;
+}
