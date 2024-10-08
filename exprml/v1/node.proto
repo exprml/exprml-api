@@ -35,8 +35,8 @@ message Node {
   }
   // Kind is the kind of the Node.
   Kind kind = 3;
-  // arr_children is the array children of the Node.
-  repeated Node array_children = 4;
-  // obj_children is the object children of the Node.
-  map<string, Node> object_children = 5;
+  // arr is the array children of the Node.
+  repeated Node array = 4;
+  // obj is the object children of the Node.
+  map<string, Node> object = 5;
 }
