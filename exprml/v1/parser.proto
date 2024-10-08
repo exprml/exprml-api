@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package exprml.v1;
+
+import "exprml/v1/node.proto";
+import "exprml/v1/value.proto";
+
+// Parser interface parses a JSON value into a Node.
+service Parser {
+  // Parse parses a JSON value into a Node.
+  rpc Parse(ParseInput) returns (ParseOutput) {}
+}
+
+// ParseInput is the input message for the Parse method.
+message ParseInput {
+  // JSON value to parse.
+  Value value = 1;
+}
+
+// ParseOutput is the output message for the Parse method.
+message ParseOutput {
+  // Whether an error occurred during parsing.
+  bool is_error = 1;
+  // Error message if is_error is true.
+  string error_message = 2;
+  // Parsed Node.
+  Node node = 3;
+}

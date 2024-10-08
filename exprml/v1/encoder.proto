@@ -4,21 +4,33 @@ package exprml.v1;
 
 import "exprml/v1/value.proto";
 
+// Encoder interface encodes a JSON value into a YAML or JSON string.
 service Encoder {
+  // Encode encodes a JSON value into a YAML or JSON string.
   rpc Encode(EncodeInput) returns (EncodeOutput) {}
 }
 
+// EncodeInput is the input message for the Encode method.
 message EncodeInput {
+  // Format of the output string.
   enum Format {
-    FORMAT_YAML = 0;
-    FORMAT_JSON = 1;
+    // YAML format.
+    YAML = 0;
+    // JSON format.
+    JSON = 1;
   }
+  // Format of the output string.
   Format format = 1;
+  // JSON value to encode.
   Value value = 3;
 }
 
+// EncodeOutput is the output message for the Encode method.
 message EncodeOutput {
+  // Whether an error occurred during encoding.
   bool is_error = 1;
+  // Error message if is_error is true.
   string error_message = 2;
+  // Encoded YAML or JSON string.
   string result = 3;
 }

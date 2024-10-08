@@ -2,20 +2,31 @@ syntax = "proto3";
 
 package exprml.v1;
 
+// Validator interface validates a YAML string.
 service Validator {
+  // Validate validates a YAML string.
   rpc Validate(ValidateInput) returns (ValidateOutput) {}
 }
 
+// ValidateInput is the input message for the Validate method.
 message ValidateInput {
+  // YAML string to validate.
   string source = 1;
 }
 
+// ValidateOutput is the output message for the Validate method.
 message ValidateOutput {
+  // Status of the validation.
   enum Status {
+    // OK indicates that the YAML string is valid.
     OK = 0;
+    // YAML_ERROR indicates that the YAML string is invalid.
     YAML_ERROR = 1;
+    // VALIDATION_ERROR indicates that the YAML string is valid but the content is invalid.
     VALIDATION_ERROR = 2;
   }
+  // Status of the validation.
   Status status = 1;
+  // Error message if status is not OK.
   string error_message = 2;
 }

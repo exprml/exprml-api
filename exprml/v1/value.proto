@@ -2,20 +2,35 @@ syntax = "proto3";
 
 package exprml.v1;
 
-enum Type {
-  TYPE_UNSPECIFIED = 0;
-  TYPE_NULL = 1;
-  TYPE_BOOL = 2;
-  TYPE_NUM = 3;
-  TYPE_STR = 4;
-  TYPE_ARR = 5;
-  TYPE_OBJ = 6;
-}
+// JSON value.
 message Value {
+  // Type of a JSON value.
+  enum Type {
+    // Unspecified.
+    UNSPECIFIED = 0;
+    // Null type.
+    NULL = 1;
+    // Boolean type.
+    BOOL = 2;
+    // Number type.
+    NUM = 3;
+    // String type.
+    STR = 4;
+    // Array type.
+    ARR = 5;
+    // Object type.
+    OBJ = 6;
+  }
+  // Type of the value.
   Type type = 1;
+  // bool has a boolean value if the type is TYPE_BOOL.
   bool bool = 2;
+  // num has a number value if the type is TYPE_NUM.
   double num = 3;
+  // str has a string value if the type is TYPE_STR.
   string str = 4;
+  // arr has an array value if the type is TYPE_ARR.
   repeated Value arr = 5;
+  // obj has an object value if the type is TYPE_OBJ.
   map<string, Value> obj = 6;
 }

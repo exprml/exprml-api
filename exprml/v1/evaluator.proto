@@ -2,64 +2,86 @@ syntax = "proto3";
 
 package exprml.v1;
 
+import "exprml/v1/node.proto";
 import "exprml/v1/value.proto";
 
+// Evaluator interface evaluates an expression.
 service Evaluator {
+  // EvaluateExpr evaluates an expression.
   rpc EvaluateExpr(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  // EvaluateEval evaluates an Eval expression.
   rpc EvaluateEval(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  // EvaluateScalar evaluates a Scalar expression.
   rpc EvaluateScalar(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  // EvaluateObj evaluates an Obj expression.
   rpc EvaluateObj(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  // EvaluateArr evaluates an Arr expression.
   rpc EvaluateArr(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  // EvaluateJson evaluates a Json expression.
   rpc EvaluateJson(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  // EvaluateRef evaluates a RangeIter expression.
   rpc EvaluateRangeIter(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  // EvaluateRef evaluates a GetElem expression.
   rpc EvaluateGetElem(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  // EvaluateRef evaluates a FunCall expression.
   rpc EvaluateFunCall(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  // EvaluateRef evaluates a Cases expression.
   rpc EvaluateCases(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  // EvaluateRef evaluates an OpUnary expression.
   rpc EvaluateOpUnary(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  // EvaluateRef evaluates an OpBinary expression.
   rpc EvaluateOpBinary(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  // EvaluateRef evaluates an OpVariadic expression.
   rpc EvaluateOpVariadic(EvaluateExprInput) returns (EvaluateExprOutput) {}
 }
 
-message FunDef {
-  string def = 1;
-  exprml.v1.Value value = 2;
-  repeated string with = 3;
-  Path path = 10;
-}
+// FunDefList is a list of function definitions.
 message FunDefList {
+  // Parent function definition list.
   FunDefList parent = 1;
-  FunDef def = 2;
+  // Function definitions.
+  exprml.v1.Node fun_def = 3;
 }
 
-message Path {
-  message Pos {
-    int64 index = 1;
-    string key = 2;
-  }
-  repeated Pos pos = 1;
-}
-
+// EvaluateExprInput is the input message for the EvaluateExpr method.
 message EvaluateExprInput {
-  Path path = 10;
-  FunDefList defs = 1;
-  exprml.v1.Value expr = 2;
+  // Function definition stack.
+  FunDefList def_stack = 1;
+  // Expression to evaluate.
+  exprml.v1.Node expr = 2;
 }
 
+// EvaluateExprOutput is the output message for the EvaluateExpr method.
 message EvaluateExprOutput {
+  // Status of the evaluation.
   enum Status {
+    // Evaluation was successful.
     OK = 0;
+    // Index is invalid.
     INVALID_INDEX = 100;
+    // Key is invalid.
     INVALID_KEY = 101;
+    // Type is unexpected.
     UNEXPECTED_TYPE = 102;
+    // Argument mismatch.
     ARGUMENT_MISMATCH = 103;
+    // Cases are not exhaustive.
     CASES_NOT_EXHAUSTIVE = 104;
+    // Reference not found.
     REFERENCE_NOT_FOUND = 105;
+    // Values are not comparable.
     NOT_COMPARABLE = 106;
+    // Evaluation was aborted.
     ABORTED = 107;
-    UNKNOWN = 108;
+    // Unknown error.
+    UNKNOWN_ERROR = 108;
   }
+  // Status of the evaluation.
   Status status = 1;
+  // Error message if status is not OK.
   string error_message = 2;
-  Path error_path = 3;
-  exprml.v1.Value value = 4;
+  // Error path if status is not OK.
+  Node.Path error_path = 3;
+  // Result of the evaluation.
+  Value value = 4;
 }
