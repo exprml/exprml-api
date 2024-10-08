@@ -8,31 +8,31 @@ import "exprml/v1/value.proto";
 // Evaluator interface evaluates an expression.
 service Evaluator {
   // EvaluateExpr evaluates an expression.
-  rpc EvaluateExpr(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateExpr(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateEval evaluates an Eval expression.
-  rpc EvaluateEval(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateEval(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateScalar evaluates a Scalar expression.
-  rpc EvaluateScalar(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateScalar(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateObj evaluates an Obj expression.
-  rpc EvaluateObj(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateObj(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateArr evaluates an Arr expression.
-  rpc EvaluateArr(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateArr(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateJson evaluates a Json expression.
-  rpc EvaluateJson(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateJson(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateRef evaluates a RangeIter expression.
-  rpc EvaluateRangeIter(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateRangeIter(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateRef evaluates a GetElem expression.
-  rpc EvaluateGetElem(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateGetElem(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateRef evaluates a FunCall expression.
-  rpc EvaluateFunCall(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateFunCall(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateRef evaluates a Cases expression.
-  rpc EvaluateCases(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateCases(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateRef evaluates an OpUnary expression.
-  rpc EvaluateOpUnary(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateOpUnary(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateRef evaluates an OpBinary expression.
-  rpc EvaluateOpBinary(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateOpBinary(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateRef evaluates an OpVariadic expression.
-  rpc EvaluateOpVariadic(EvaluateExprInput) returns (EvaluateExprOutput) {}
+  rpc EvaluateOpVariadic(EvaluateInput) returns (EvaluateOutput) {}
 }
 
 // FunDefList is a list of function definitions.
@@ -43,16 +43,16 @@ message FunDefList {
   exprml.v1.Node fun_def = 3;
 }
 
-// EvaluateExprInput is the input message for the EvaluateExpr method.
-message EvaluateExprInput {
+// EvaluateInput is the input message for the EvaluateExpr method.
+message EvaluateInput {
   // Function definition stack.
   FunDefList def_stack = 1;
   // Expression to evaluate.
   exprml.v1.Node expr = 2;
 }
 
-// EvaluateExprOutput is the output message for the EvaluateExpr method.
-message EvaluateExprOutput {
+// EvaluateOutput is the output message for the EvaluateExpr method.
+message EvaluateOutput {
   // Status of the evaluation.
   enum Status {
     // Evaluation was successful.
