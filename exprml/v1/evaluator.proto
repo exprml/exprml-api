@@ -58,9 +58,9 @@ message EvaluateOutput {
     // Evaluation was successful.
     OK = 0;
     // Index is invalid.
-    INDEX_OUT_OF_BOUNDS = 100;
+    INVALID_INDEX = 100;
     // Key is invalid.
-    KEY_NOT_FOUND = 101;
+    INVALID_KEY = 101;
     // Type is unexpected.
     UNEXPECTED_TYPE = 102;
     // Argument mismatch.
