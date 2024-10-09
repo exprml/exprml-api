@@ -71,10 +71,12 @@ message EvaluateOutput {
     REFERENCE_NOT_FOUND = 105;
     // Values are not comparable.
     NOT_COMPARABLE = 106;
+    // Not a finite number.
+    NOT_FINITE_NUMBER = 107;
     // Evaluation was aborted.
-    ABORTED = 107;
+    ABORTED = 108;
     // Unknown error.
-    UNKNOWN_ERROR = 108;
+    UNKNOWN_ERROR = 109;
   }
   // Status of the evaluation.
   Status status = 1;
