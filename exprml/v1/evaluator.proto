@@ -39,12 +39,8 @@ service Evaluator {
 message DefStack {
   // Parent definition list.
   DefStack parent = 1;
-  // Definition identifier.
-  string ident = 2;
-  // Definition body.
-  Expr body = 3;
-  // Definition arguments.
-  repeated string args = 4;
+  // Definition.
+  Eval.Definition def = 2;
 }
 
 // EvaluateInput is the input message for the EvaluateExpr method.
