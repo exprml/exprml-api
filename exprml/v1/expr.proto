@@ -1,0 +1,262 @@
+syntax = "proto3";
+
+package exprml.v1;
+
+import "exprml/v1/value.proto";
+
+message Expr {
+  // Path represents a path to the Node.
+  message Path {
+    // Pos represents a position in the path.
+    message Pos {
+      // Index is the index of the position.
+      int64 index = 1;
+      // Key is the key of the position.
+      string key = 2;
+    }
+    // Pos is a position in the path.
+    repeated Pos pos = 1;
+  }
+  // Path is the path to the Node.
+  Path path = 1;
+
+  // Value is the JSON value of the Node.
+  Value value = 2;
+
+  // Kind is the kind of the Node.
+  enum Kind {
+    // Unspecified.
+    UNSPECIFIED = 0;
+    // Eval kind.
+    EVAL = 10;
+    // Scalar kind.
+    SCALAR = 11;
+    // Ref kind.
+    REF = 12;
+    // Obj kind.
+    OBJ = 13;
+    // Arr kind.
+    ARR = 14;
+    // Json kind.
+    JSON = 15;
+    // Iter kind.
+    ITER = 16;
+    // Elem kind.
+    ELEM = 17;
+    // Call kind.
+    CALL = 18;
+    // Cases kind.
+    CASES = 19;
+    // OpUnary kind.
+    OP_UNARY = 20;
+    // OpBinary kind.
+    OP_BINARY = 21;
+    // OpVariadic kind.
+    OP_VARIADIC = 22;
+  }
+  // Eval is an Eval Expr.
+  Eval eval = 10;
+  // Scalar is a Scalar Expr.
+  Scalar scalar = 11;
+  // Ref is a Ref Expr.
+  Ref ref = 12;
+  // Obj is an Obj Expr.
+  Obj obj = 13;
+  // Arr is an Arr Expr.
+  Arr arr = 14;
+  // Json is a Json Expr.
+  Json json = 15;
+  // Iter is an Iter Expr.
+  Iter iter = 16;
+  // Elem is an Elem Expr.
+  Elem elem = 17;
+  // Call is a Call Expr.
+  Call call = 18;
+  // Cases is a Cases Expr.
+  Cases cases = 19;
+  // OpUnary is an OpUnary Expr.
+  OpUnary op_unary = 20;
+  // OpBinary is an OpBinary Expr.
+  OpBinary op_binary = 21;
+  // OpVariadic is an OpVariadic Expr.
+  OpVariadic op_variadic = 22;
+}
+
+// Eval is an Eval expression.
+message Eval {
+  // Eval is an expression to evaluate.
+  Expr eval = 1;
+  // Where is a list of definitions.
+  repeated Definition where = 2;
+  // Definition is a function or variable definition.
+  message Definition {
+    // Ident is the identifier of the definition.
+    string ident = 1;
+    // Args is the list of arguments.
+    repeated string args = 2;
+    // Body is the body of the definition.
+    Expr body = 3;
+  }
+}
+
+// Scalar is a Scalar expression.
+message Scalar {
+  // Scalar is a scalar value.
+  Value scalar = 1;
+}
+
+// Ref is a Ref expression.
+message Ref {
+  // Ident is the identifier of the reference.
+  string ident = 1;
+}
+
+// Obj is an Obj expression.
+message Obj {
+  // Obj is an object.
+  map<string, Expr> obj = 1;
+}
+
+// Arr is an Arr expression.
+message Arr {
+  // Arr is an array.
+  repeated Expr arr = 1;
+}
+
+// Json is a Json expression.
+message Json {
+  // Json is a JSON value.
+  Value json = 1;
+}
+
+// Iter is an Iter expression.
+message Iter {
+  // PosIdent is the identifier of the position.
+  string pos_ident = 1;
+  // ElemIdent is the identifier of the element.
+  string elem_ident = 2;
+  // Col is the collection to iterate.
+  Expr col = 3;
+  // Do is the body of the iteration.
+  Expr do = 4;
+  // If is the condition of the iteration.
+  Expr if = 5;
+}
+
+// Elem is an Elem expression.
+message Elem {
+  // Get is the expression to get the element.
+  Expr get = 1;
+  // From is the index to get the element.
+  Expr from = 2;
+}
+
+// Call is a Call expression.
+message Call {
+  // Ident is the identifier of the call.
+  string ident = 1;
+  // Args is the list of arguments.
+  map<string, Expr> args = 2;
+}
+
+// Cases is a Cases expression.
+message Cases {
+  // Case is a conditional branch.
+  message Case {
+    // Whether the case is otherwise.
+    bool is_otherwise = 1;
+    // When is the condition of the case.
+    Expr when = 2;
+    // Then is the body of the case.
+    Expr then = 3;
+    // Otherwise is the body of the case.
+    Expr otherwise = 4;
+  }
+  // Cases is a list of cases.
+  repeated Case cases = 1;
+}
+
+// OpUnary is an OpUnary expression.
+message OpUnary {
+  // Op is a operator.
+  enum Op {
+    // Unspecified.
+    UNSPECIFIED = 0;
+    // Len operator.
+    LEN = 1;
+    // Not operator.
+    NOT = 2;
+    // Flat operator.
+    FLAT = 3;
+    // Floor operator.
+    FLOOR = 4;
+    // Ceil operator.
+    CEIL = 5;
+    // Abort operator.
+    ABORT = 6;
+  }
+  // Op is the operator.
+  Op op = 1;
+  // Operand is the operand.
+  Expr operand = 2;
+}
+
+// OpBinary is an OpBinary expression.
+message OpBinary {
+  // Op is a operator.
+  enum Op {
+    // Unspecified.
+    UNSPECIFIED = 0;
+    // Sub operator.
+    SUB = 1;
+    // Div operator.
+    DIV = 2;
+    // Eq operator.
+    EQ = 3;
+    // Neq operator.
+    NEQ = 4;
+    // Lt operator.
+    LT = 5;
+    // Lte operator.
+    LTE = 6;
+    // Gt operator.
+    GT = 7;
+    // Gte operator.
+    GTE = 8;
+  }
+  // Op is the operator.
+  Op op = 1;
+  // Left is the left operand.
+  Expr left = 2;
+  // Right is the right operand.
+  Expr right = 3;
+}
+
+// OpVariadic is an OpVariadic expression.
+message OpVariadic {
+  // Op is a operator.
+  enum Op {
+    // Unspecified.
+    UNSPECIFIED = 0;
+    // Add operator.
+    ADD = 1;
+    // Mul operator.
+    MUL = 2;
+    // And operator.
+    AND = 3;
+    // Or operator.
+    OR = 4;
+    // Cat operator.
+    CAT = 5;
+    // Min operator.
+    MIN = 6;
+    // Max operator.
+    MAX = 7;
+    // Merge operator.
+    MERGE = 8;
+  }
+  // Op is the operator.
+  Op op = 1;
+  // Operands is the list of operands.
+  repeated Expr operands = 2;
+}

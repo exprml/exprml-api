@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package exprml.v1;
 
-import "exprml/v1/node.proto";
+import "exprml/v1/expr.proto";
 import "exprml/v1/value.proto";
 
 // Evaluator interface evaluates an expression.
@@ -36,19 +36,23 @@ service Evaluator {
 }
 
 // FunDefList is a list of function definitions.
-message FunDefList {
-  // Parent function definition list.
-  FunDefList parent = 1;
-  // Function definitions.
-  exprml.v1.Node fun_def = 3;
+message DefStack {
+  // Parent definition list.
+  DefStack parent = 1;
+  // Definition identifier.
+  string ident = 2;
+  // Definition body.
+  Expr body = 3;
+  // Definition arguments.
+  repeated string args = 4;
 }
 
 // EvaluateInput is the input message for the EvaluateExpr method.
 message EvaluateInput {
   // Function definition stack.
-  FunDefList def_stack = 1;
+  DefStack def_stack = 1;
   // Expression to evaluate.
-  exprml.v1.Node expr = 2;
+  Expr expr = 2;
 }
 
 // EvaluateOutput is the output message for the EvaluateExpr method.
@@ -83,7 +87,7 @@ message EvaluateOutput {
   // Error message if status is not OK.
   string error_message = 2;
   // Error path if status is not OK.
-  Node.Path error_path = 3;
+  Expr.Path error_path = 3;
   // Result of the evaluation.
   Value value = 4;
 }
