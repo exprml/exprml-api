@@ -54,6 +54,8 @@ message Expr {
     // OpVariadic kind.
     OP_VARIADIC = 22;
   }
+  // Kind is the kind of the Expr.
+  Kind kind = 3;
   // Eval is an Eval Expr.
   Eval eval = 10;
   // Scalar is a Scalar Expr.
