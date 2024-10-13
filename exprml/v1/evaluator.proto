@@ -13,25 +13,27 @@ service Evaluator {
   rpc EvaluateEval(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateScalar evaluates a Scalar expression.
   rpc EvaluateScalar(EvaluateInput) returns (EvaluateOutput) {}
+  // EvaluateRef evaluates an Ref expression.
+  rpc EvaluateRef(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateObj evaluates an Obj expression.
   rpc EvaluateObj(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateArr evaluates an Arr expression.
   rpc EvaluateArr(EvaluateInput) returns (EvaluateOutput) {}
   // EvaluateJson evaluates a Json expression.
   rpc EvaluateJson(EvaluateInput) returns (EvaluateOutput) {}
-  // EvaluateRef evaluates a RangeIter expression.
-  rpc EvaluateRangeIter(EvaluateInput) returns (EvaluateOutput) {}
-  // EvaluateRef evaluates a GetElem expression.
-  rpc EvaluateGetElem(EvaluateInput) returns (EvaluateOutput) {}
-  // EvaluateRef evaluates a FunCall expression.
-  rpc EvaluateFunCall(EvaluateInput) returns (EvaluateOutput) {}
-  // EvaluateRef evaluates a Cases expression.
+  // EvaluateIter evaluates a Iter expression.
+  rpc EvaluateIter(EvaluateInput) returns (EvaluateOutput) {}
+  // EvaluateElem evaluates a Elem expression.
+  rpc EvaluateElem(EvaluateInput) returns (EvaluateOutput) {}
+  // EvaluateCall evaluates a Call expression.
+  rpc EvaluateCall(EvaluateInput) returns (EvaluateOutput) {}
+  // EvaluateCases evaluates a Cases expression.
   rpc EvaluateCases(EvaluateInput) returns (EvaluateOutput) {}
-  // EvaluateRef evaluates an OpUnary expression.
+  // EvaluateOpUnary evaluates an OpUnary expression.
   rpc EvaluateOpUnary(EvaluateInput) returns (EvaluateOutput) {}
-  // EvaluateRef evaluates an OpBinary expression.
+  // EvaluateOpBinary evaluates an OpBinary expression.
   rpc EvaluateOpBinary(EvaluateInput) returns (EvaluateOutput) {}
-  // EvaluateRef evaluates an OpVariadic expression.
+  // EvaluateOpVariadic evaluates an OpVariadic expression.
   rpc EvaluateOpVariadic(EvaluateInput) returns (EvaluateOutput) {}
 }
 
