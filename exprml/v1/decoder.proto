@@ -4,16 +4,16 @@ package exprml.v1;
 
 import "exprml/v1/value.proto";
 
-// Decoder interface decodes a YAML string into a JSON value.
+// Decoder interface decodes a string in JSON (and JSON-compatible YAML) into a JSON value.
 service Decoder {
-  // Decode decodes a YAML string into a JSON value.
+  // Decode decodes a string in JSON (and JSON-compatible YAML) into a JSON value.
   rpc Decode(DecodeInput) returns (DecodeOutput) {}
 }
 
 // DecodeInput is the input message for the Decode method.
 message DecodeInput {
-  // YAML string to decode.
-  string yaml = 1;
+  // string in JSON (and JSON-compatible YAML).
+  string text = 1;
 }
 
 // DecodeOutput is the output message for the Decode method.
